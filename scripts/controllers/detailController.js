@@ -6,13 +6,24 @@
     console.log('in addDetailListener');
     $('.list-display').on('click', '.show-less', function(ctx) {
       console.log('clicked on show-less');
+      $(this).hide();
+      $(this).parent().find('.show-more').show();
+      // $('.show-more').show();
+      // $('.show-less').hide();
       $('section').find($('.' + ctx.toElement.id).empty());
     });
     $('.list-display').on('click', '.show-more', function(ctx) {
       console.log('clicked on show-more');
+      $(this).hide();
+      $(this).parent().find('.show-less').show();
+      // $('.show-less').show();
+      // $('.show-more').hide();
       Details.getData(ctx.toElement.id);
     });
   };
+
+  $(this).parent().find('a.read-on').show();
+    $(this).parent().find('a.show-less').hide();
 
   module.detailController = detailController;
 })(window);

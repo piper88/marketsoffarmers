@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
     <title>Farmer's Markets Near Me</title>
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles/base.css" />
 
     <script id="list-of-markets" type="text/x-handlebars-template">
       <section class="list-display">
-        <h4><strong>Name: </strong>{{marketname}}</h4>
+        <h4>Name: {{marketname}}</h4>
+        <h5>Distance from zip code: {{distance}}</h5>
+        <!-- //eventually don't have two identical ids...defeats the purpose -->
         <button id={{{id}}} class="show-more">Show Details of this market</button>
         <section class={{{id}}}>
         </section>
         <button id={{{id}}} class="show-less">Hide Details</button>
-        <!-- <p><strong>Distance from zip code:</strong>{{distance}}</p> -->
       </section>
     </script>
     <script id="market-details" type="text/x-handlebars-template">
       <section class="detail-display">
-        <h5><strong>Address: </strong>{{Address}}</h5>
-        <h5><strong>Schedule: </strong>{{{Schedule}}}</h5>
-        <h5><strong>Products: </strong>{{Products}}</h5>
+        <h5>Address: {{Address}}</h5>
+        <h5>Schedule: {{{Schedule}}}</h5>
+        <h5>Products: {{Products}}</h5>
 
       </section>
     </script>

@@ -4,9 +4,12 @@
   // var marketDetails = [];
 
   function Details (opts) {
-    for (keys in opts) {
-      this[keys] = opts[keys];
-    }
+    // for (keys in opts) {
+    //   this[keys] = opts[keys];
+    // }
+    this.Address = opts.Address;
+    this.Schedule = opts.Schedule.slice(0, opts.Schedule.length - 12);
+    this.Products = opts.Products;
   }
 
   Details.all = [];

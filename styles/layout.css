@@ -1,0 +1,13 @@
+.page-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.search-and-market-list {
+  max-width: 50%;
+}
+
+#map {
+  max-width: 50%;
+}

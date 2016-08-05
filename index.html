@@ -4,11 +4,14 @@
     <meta charset="utf-8">
     <title>Farmer's Markets Near Me</title>
 
+
     <script id="list-of-markets" type="text/x-handlebars-template">
       <section class="list-display">
         <h4><strong>Name: </strong>{{marketname}}</h4>
         <button id={{{id}}} class="show-more">Show Details of this market</button>
-        <button class="show-less">Hide Details</button>
+        <section class={{{id}}}>
+        </section>
+        <button id={{{id}}} class="show-less">Hide Details</button>
         <!-- <p><strong>Distance from zip code:</strong>{{distance}}</p> -->
       </section>
     </script>
@@ -20,6 +23,15 @@
 
       </section>
     </script>
+
+<!-- //trying to find a way to route the page to the correct zip on submit -->
+    <!-- <script id="zip" type="text/x-handlebars-template">
+      <form id="formiepoo">
+        Zip Code: <br>
+        <input type="text" name="zip" id = "zip"></input>
+        <a href="/?zip={{zip}}"><button type="submit">Find Farmers Markets</button></a>
+      </form>
+    </script> -->
 
   </head>
   <body>
@@ -39,6 +51,7 @@
     <script src="vendors/scripts/handlebars.js"></script>
     <script src="vendors/scripts/html5sql.js"></script>
     <script src="vendors/scripts/webdb.js"></script>
+    <script src="vendors/scripts/page.js"></script>
     <!-- models -->
     <script src="scripts/models/markets.js"></script>
     <script src="scripts/models/details.js"></script>
@@ -49,5 +62,6 @@
     <!-- controllers -->
     <script src="scripts/controllers/marketController.js"></script>
     <script src="scripts/controllers/detailController.js"></script>
+    <script src="scripts/controllers/routes.js"></script>
   </body>
 </html>

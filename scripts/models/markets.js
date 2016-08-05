@@ -39,10 +39,10 @@
           var market = new Market(singleMarket);
           // console.log(market);
           market.insertPermit();
+          //maybe this append part should eventually go in views somehow?
           $('#list-container').append(market.toHtml());
         });
-        Market.addDetailListener();
-        // }
+        Market.handoverToController();
       }
 
     });
@@ -51,13 +51,13 @@
   };
 
 //TODO: as soon as list of markets shows up, add event listener to each market, so when clicked, the id is saved and it triggers the Details.getData(with clicked id)
-  Market.addDetailListener = function() {
-    $('.list-display').on('click', '.show-more', function(ctx) {
-      console.log($(this));
-      console.log(ctx.toElement.id);
-      Details.getData(ctx.toElement.id);
-    });
+//maybe go in marketController
+
+//if you want to call a method on an object or array in different js file, must wrap in method on an array within that js file
+  Market.handoverToController = function() {
+    detailController.addDetailListener();
   };
+
 
   Market.createTable = function(next) {
     console.log('inside Market.createTable');
@@ -75,6 +75,7 @@
       e.preventDefault();
       // webDB.execute('DELETE * from marketdata');
       var chosenZip = $('#zip').val();
+      // zipCompiler(chosenZip);
       if (chosenZip.length === 0) {
         console.log('zip is not present');
         Market.getData(98103);
@@ -98,6 +99,8 @@
   };
 
 //should eventually go in views
+//compile it in the views, and then append the result of calling a method on like details. or Market.
+//but I think anything on the prototype has to stay within the file with that object
   Market.prototype.toHtml = function() {
     var source = $('#list-of-markets').html();
     var template = Handlebars.compile(source);
@@ -106,7 +109,6 @@
 
 //put this line in the marketController file...perhaps correct, perhaps not
   Market.createTable();
-  // marketController.loadMarketsByZip();
 
   module.Market = Market;
 })(window);

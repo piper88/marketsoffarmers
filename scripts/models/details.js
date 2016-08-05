@@ -26,7 +26,9 @@
         }
         var detail = new Details(Details.all);
         detail.insertDetails();
-        $('#' + id).append(detail.toHtml());
+        // $('.detail-container').append(detail.toHtml());
+        $('.' + id).append(detail.toHtml());
+        // detail.toHtml(id);
       }
     });
     // detailView.showDetails();
@@ -56,7 +58,8 @@
   };
 
 //should also eventually go in views, I think...
-  Details.prototype.toHtml = function() {
+  Details.prototype.toHtml = function(id) {
+    // detailView.showDetails(id);
     var source = $('#market-details').html();
     var template = Handlebars.compile(source);
     return template(this);

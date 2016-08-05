@@ -1,10 +1,10 @@
 (function(module) {
   // Permit constructor
   function Market (opts) {
-    for (keys in opts) {
-      this[keys] = opts[keys];
-    }
-  }
+    this.id = opts.id;
+    this.marketname = opts.marketname.slice(4);
+    this.distance = opts.marketname.slice(0,3);
+  };
 
   Market.all = [];
 
@@ -27,17 +27,15 @@
 
       dataType: 'jsonp',
       success: function(data) {
+        console.log(data);
         Market.all = data;
-        // console.log(Market.all);
         // if (!rows.length) {
         //   console.log(Market.all);
-        Market.all.results.forEach(function(singleMarket) {
+        Market.all.results.slice(0,10).forEach(function(singleMarket) {
           //splice first 4 characters off, set to distance variable
           // singleMarket = singleMarket.marketname.slice(3);
-          // console.log(singleMarket);
           // var newMarket = singleMarket.marketname.slice(3);
           var market = new Market(singleMarket);
-          // console.log(market);
           market.insertPermit();
           //maybe this append part should eventually go in views somehow?
           $('#list-container').append(market.toHtml());
@@ -58,13 +56,13 @@
     detailController.addDetailListener();
   };
 
-
   Market.createTable = function(next) {
     console.log('inside Market.createTable');
     webDB.execute(
       'CREATE TABLE IF NOT EXISTS marketdata (' +
         'id INTEGER PRIMARY KEY, ' +
-        'marketname VARCHAR(255)); '
+        'marketname VARCHAR(255), ' +
+        'distance FLOAT); '
     );
     Market.findMarketsByZip();
   };
@@ -91,8 +89,8 @@
     webDB.execute(
       [
         {
-          'sql': 'INSERT INTO marketdata (marketname) VALUES (?);',
-          'data': [this.marketname],
+          'sql': 'INSERT INTO marketdata (marketname, distance) VALUES (?, ?);',
+          'data': [this.marketname, this.distance],
         }
       ]
     );

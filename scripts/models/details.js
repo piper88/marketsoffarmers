@@ -1,12 +1,6 @@
 (function(module) {
-  ///not sure if there should be arrays, objects, the Details constructor or no, etc....tbd
-  //TODO: When they click on a market, should pop up with the details
-  // var marketDetails = [];
 
   function Details (opts) {
-    // for (keys in opts) {
-    //   this[keys] = opts[keys];
-    // }
     this.Address = opts.Address;
     this.Schedule = opts.Schedule.slice(0, opts.Schedule.length - 12);
     this.Products = opts.Products;
@@ -29,12 +23,9 @@
         }
         var detail = new Details(Details.all);
         detail.insertDetails();
-        // $('.detail-container').append(detail.toHtml());
         $('.' + id).append(detail.toHtml());
-        // detail.toHtml(id);
       }
     });
-    // detailView.showDetails();
   };
 
   Details.createTable = function(next) {

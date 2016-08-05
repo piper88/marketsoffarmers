@@ -4,12 +4,13 @@
     <title>Farmer's Markets Near Me</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles/layout.css" />
     <link rel="stylesheet" href="styles/base.css" />
 
     <script id="list-of-markets" type="text/x-handlebars-template">
       <section class="list-display">
         <h4>Name: {{marketname}}</h4>
-        <h5>Distance from zip code: {{distance}}</h5>
+        <h5>Distance from zip code: {{distance}} miles</h5>
         <!-- //eventually don't have two identical ids...defeats the purpose -->
         <button id={{{id}}} class="show-more">Show Details of this market</button>
         <section class={{{id}}}>
@@ -17,6 +18,7 @@
         <button id={{{id}}} class="show-less">Hide Details</button>
       </section>
     </script>
+
     <script id="market-details" type="text/x-handlebars-template">
       <section class="detail-display">
         <h5>Address: {{Address}}</h5>
@@ -36,16 +38,28 @@
     </script> -->
 
   </head>
+
   <body>
-    <form id="formiepoo">
-      Zip Code: <br>
-      <input type="text" name="zip" id = "zip"></input>
-      <button type="submit">Find Farmer's Markets</button>
-    </form>
+    <section class="page-wrapper">
+      <section class="search-and-market-list">
 
-    <section id="list-container" class="changeable-area">
-    </section>
+        <form id="formiepoo">
+          Zip Code: <br>
+          <input type="text" name="zip" id = "zip"></input>
+          <button type="submit">Find Farmer's Markets</button>
+        </form>
 
+        <section id="list-container" class="changeable-area">
+        </section>
+
+      <!-- End of search-and-market-list section -->
+      </section>
+
+      <div id="map">
+
+      </div>
+  <!-- End of page wrapper -->
+  </section>
 
 
     <!-- vendors -->
@@ -54,7 +68,9 @@
     <script src="vendors/scripts/html5sql.js"></script>
     <script src="vendors/scripts/webdb.js"></script>
     <script src="vendors/scripts/page.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjoe5awPREbRDM0Vhlg2GS73-SskZMnTM&v=3.exp&libraries=visualization&libraries=places"></script>
     <!-- models -->
+    <script src="scripts/models/map.js"></script>
     <script src="scripts/models/markets.js"></script>
     <script src="scripts/models/details.js"></script>
     <!-- views -->

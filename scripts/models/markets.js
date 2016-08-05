@@ -1,5 +1,5 @@
 (function(module) {
-  // Permit constructor
+
   function Market (opts) {
     this.id = opts.id;
     this.marketname = opts.marketname.slice(4);
@@ -29,12 +29,7 @@
       success: function(data) {
         console.log(data);
         Market.all = data;
-        // if (!rows.length) {
-        //   console.log(Market.all);
         Market.all.results.slice(0,10).forEach(function(singleMarket) {
-          //splice first 4 characters off, set to distance variable
-          // singleMarket = singleMarket.marketname.slice(3);
-          // var newMarket = singleMarket.marketname.slice(3);
           var market = new Market(singleMarket);
           market.insertPermit();
           //maybe this append part should eventually go in views somehow?
@@ -48,10 +43,7 @@
     // });
   };
 
-//TODO: as soon as list of markets shows up, add event listener to each market, so when clicked, the id is saved and it triggers the Details.getData(with clicked id)
-//maybe go in marketController
-
-//if you want to call a method on an object or array in different js file, must wrap in method on an array within that js file
+//if you want to call a method on an object or array in different js file, must wrap in method on an array within that js file?
   Market.handoverToController = function() {
     detailController.addDetailListener();
   };

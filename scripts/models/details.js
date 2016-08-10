@@ -8,23 +8,33 @@
 
   Details.all = [];
 
+  //first have to create the Market object WITH id AND details, and then push to an array, so you have an array of objects
+
+  //JOIN websql tables by id, to get new table with id, name, distance, and details
+
   Details.getData = function(id) {
+    console.log('in Details.getData');
     $.ajax({
       type: 'GET',
       contentType: "application/json; charset=utf-8",
       url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/mktDetail?id=" + id,
       dataType: 'jsonp',
       success: function(detaileddata) {
-        for (var key in detaileddata) {
-          //this inserts detail records properly into websql, but doesn't keep adding details of multiple markets (only has one market details at a time)
-          Details.all = detaileddata[key];
-          //this one properly keeps all market details in the Details.all array, but doesn't result in proper insertion of the detail records into websql
-          // Details.all.push(detaileddata[key]);
-        }
-        var detail = new Details(Details.all);
-        detail.insertDetails();
-        $('.' + id).append(detail.toHtml());
+        console.log('detail success');
+        var market = new Details(detaileddata.marketdetails);
+        market.insertDetails();
+        // market.showDetails();
       }
+    });
+  };
+
+  Details.prototype.showDetails = function(oneMarket) {
+    $('.list-display').on('click', '.show-more', function(detail) {
+      console.log(detail);
+      $(this).hide();
+      $(this).parent().find('.show-less').show();
+      $('.' + detail.toElement.id).append(detail.toHtml());
+      // Details.getData(ctx.toElement.id);
     });
   };
 
@@ -32,7 +42,6 @@
     console.log('creating details table');
     webDB.execute(
       'CREATE TABLE IF NOT EXISTS detaildata (' +
-        'id INTEGER PRIMARY KEY, ' +
         'Address VARCHAR(255),' +
         'Schedule VARCHAR(255),' +
         'Products VARCHAR(500)); '
@@ -49,7 +58,16 @@
         }
       ]
     );
+    Details.joinTables();
   };
+
+  Details.joinTables = function() {
+    webDB.execute('SELECT marketdata.marketname, marketdata.id, marketdata.distance, detaildata.Address, detaildata.Schedule, detaildata.Products FROM detaildata INNER JOIN marketdata ON marketdata.rowid=detaildata.rowid', function(rows) {
+      Details.all = rows;
+    });
+    Details.renderToPage();
+  };
+
 
 //should also eventually go in views, I think...
   Details.prototype.toHtml = function(id) {

@@ -9,13 +9,14 @@
 
     <script id="list-of-markets" type="text/x-handlebars-template">
       <section class="list-display">
-        <h4>Name: {{marketname}}</h4>
+        <h4>{{marketname}}</h4>
         <h5>Distance from zip code: {{distance}} miles</h5>
         <!-- //eventually don't have two identical ids...defeats the purpose -->
         <button id={{{id}}} class="show-more">Show Details of this market</button>
         <section class={{{id}}}>
         </section>
         <button id={{{id}}} class="show-less">Hide Details</button>
+        <hr>
       </section>
     </script>
 

@@ -2,22 +2,17 @@
 
   function Market (opts) {
     this.id = opts.id;
+    console.log(opts.id);
     this.marketname = opts.marketname.slice(4);
     this.distance = opts.marketname.slice(0,3);
   };
 
+//Market.all contains id and name of market
   Market.all = [];
+  //store id's of all 10 markets, so you can drop pins at these locations
+  // Market.marketId = [];
 
   Market.getData = function(zip) {
-    // webDB.execute('SELECT * FROM marketdata', function(rows) {
-    //   if (rows.length) {
-    //     console.log('Market.getData: inside if');
-    //     Market.all = rows;
-    //     Market.all.forEach(function(singleMarket) {
-    //       var market = new Market(singleMarket);
-    //       $('#list-container').append(market.toHtml());
-    //     });
-    //   } else {
     $('#list-container').empty();
 
     $.ajax({
@@ -27,9 +22,10 @@
 
       dataType: 'jsonp',
       success: function(data) {
-        console.log(data);
+        console.log('success');
         Market.all = data;
-        Market.all.results.slice(0,10).forEach(function(singleMarket) {
+        Market.all = Market.all.results.slice(0,10);
+        Market.all.forEach(function(singleMarket) {
           var market = new Market(singleMarket);
           market.insertPermit();
           //maybe this append part should eventually go in views somehow?
@@ -39,20 +35,20 @@
       }
 
     });
-      // }
-    // });
+
   };
 
 //if you want to call a method on an object or array in different js file, must wrap in method on an array within that js file?
   Market.handoverToController = function() {
-    detailController.addDetailListener();
+    //call Details.getData on each market
+    detailController.addDetails();
   };
 
   Market.createTable = function(next) {
     console.log('inside Market.createTable');
     webDB.execute(
       'CREATE TABLE IF NOT EXISTS marketdata (' +
-        'id INTEGER PRIMARY KEY, ' +
+        'id VARCHAR(255), ' +
         'marketname VARCHAR(255), ' +
         'distance FLOAT); '
     );
@@ -62,8 +58,19 @@
   Market.findMarketsByZip = function() {
     // webDB.execute('DELETE * from marketdata');
     $('#formiepoo').on('submit', function(e) {
+      webDB.execute('SELECT * from marketdata', function(rows) {
+        if (rows.length) {
+          webDB.execute('DELETE from marketdata');
+        }
+      });
+      webDB.execute('SELECT * from detaildata', function(rows) {
+        if (rows.length) {
+          webDB.execute('DELETE from detaildata');
+        }
+      });
+
       e.preventDefault();
-      // webDB.execute('DELETE * from marketdata');
+      // webDB.execute('DELETE * FROM detaildata');
       var chosenZip = $('#zip').val();
       // zipCompiler(chosenZip);
       if (chosenZip.length === 0) {
@@ -81,8 +88,8 @@
     webDB.execute(
       [
         {
-          'sql': 'INSERT INTO marketdata (marketname, distance) VALUES (?, ?);',
-          'data': [this.marketname, this.distance],
+          'sql': 'INSERT INTO marketdata (id, marketname, distance) VALUES (?, ?, ?);',
+          'data': [this.id, this.marketname, this.distance],
         }
       ]
     );

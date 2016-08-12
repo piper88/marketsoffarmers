@@ -7,27 +7,31 @@
     <link rel="stylesheet" href="styles/layout.css" />
     <link rel="stylesheet" href="styles/base.css" />
 
-    <script id="list-of-markets" type="text/x-handlebars-template">
-      <section class="list-display">
+    <script id="market-name" type="text/x-handlebars-template">
+      <section id={{{id}}}>
         <h4>{{marketname}}</h4>
-        <h5>Distance from zip code: {{distance}} miles</h5>
-        <!-- //eventually don't have two identical ids...defeats the purpose -->
-        <button id={{{id}}} class="show-more">Show Details of this market</button>
-        <section class={{{id}}}>
-        </section>
-        <button id={{{id}}} class="show-less">Hide Details</button>
-        <hr>
       </section>
     </script>
 
-    <script id="market-details" type="text/x-handlebars-template">
+    <script id='list-of-markets' type="text/x-handlebars-template">
+      <section class="list-display">
+          <!-- <h5>Distance from zip code: {{distance}} miles</h5> -->
+          <h5>Address: {{Address}}</h5>
+          <h5>Schedule: {{{Schedule}}}</h5>
+          <h5>Products: {{Products}}</h5>
+          <hr>
+      </section>
+    </script>
+
+
+    <!--<script id="market-details" type="text/x-handlebars-template">
       <section class="detail-display">
         <h5>Address: {{Address}}</h5>
         <h5>Schedule: {{{Schedule}}}</h5>
         <h5>Products: {{Products}}</h5>
 
       </section>
-    </script>
+    </script> -->
 
 <!-- //trying to find a way to route the page to the correct zip on submit -->
     <!-- <script id="zip" type="text/x-handlebars-template">
@@ -79,8 +83,7 @@
     <script src="scripts/views/listView.js"></script>
     <script src="scripts/views/detailView.js"></script>
     <!-- controllers -->
-    <script src="scripts/controllers/marketController.js"></script>
-    <script src="scripts/controllers/detailController.js"></script>
+    <script src="scripts/controllers/mainController.js"></script>
     <script src="scripts/controllers/routes.js"></script>
   </body>
 </html>

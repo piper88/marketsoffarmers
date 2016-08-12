@@ -1,13 +1,13 @@
 (function(module) {
   var listView = {};
 
-  // listView.sortByDistance = function() {
-  //   // $('#list-container').append(listMarketsCompiler(??));
-  //   var source = $('#list-of-markets').html();
-  //   var template = Handlebars.compile(source);
-  //   return template(this);
-  // };
+  listView.compileMarkets = function(market) {
+    console.log('about to append');
+    Details.all.forEach(function(market) {
+      var marketToDisplay = Handlebars.compile($('#list-of-markets').html());
+      ($('#' + market.id).append(marketToDisplay(market)));
+    });
+  };
 
-  // listView.sortByDistance();
   module.listView = listView;
 })(window);

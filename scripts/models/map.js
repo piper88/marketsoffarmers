@@ -1,4 +1,5 @@
 (function(module) {
+  var myMap = {};
 
   var stylesArray = [
     {
@@ -28,7 +29,7 @@
 
 //properties that will live on map object when initialized
   var mapOptions = {
-    zoom: 15,
+    zoom: 12,
     styles: stylesArray,
     center: new google.maps.LatLng(47.618217, -122.351832),
     mapTypeId: google.maps.MapTypeId.STREET,
@@ -50,12 +51,34 @@
     map.setCenter(center);
   });
 
-//add pin (marker), specify position and which map you want it on
-  var marker = new google.maps.Marker({
-    position: {lat:47.618217, lng:-122.351832},
-    map: map
-  });
+  myMap.dropPins = function(latitude, longitude) {
+    console.log('dropping pin');
+    var marker = new google.maps.Marker({
+      position: {lat: latitude, lng: longitude},
+      animation: google.maps.Animation.DROP,
+      map: map
+    });
+  };
 
+  myMap.resetCenter = function(middleArrayAddress) {
+    console.log(middleArrayAddress);
+    $.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + middleArrayAddress + '&key=AIzaSyAmRBpethxWhkGO2BxwEDmdQd6hDv84fhA', function(data) {
+      console.log(data);
+      myMap.lat = data.results[0].geometry.location.lat;
+      myMap.lng = data.results[0].geometry.location.lng;
+      mapOptions.center = new google.maps.LatLng(myMap.lat, myMap.lng);
+      map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    });
+  };
 
-  module.map = map;
+  myMap.requestCoordinates = function (address) {
+    console.log('entering theMap.requestLocation', address);
+    $.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=AIzaSyAmRBpethxWhkGO2BxwEDmdQd6hDv84fhA', function(data) {
+      myMap.lat = data.results[0].geometry.location.lat;
+      myMap.lng = data.results[0].geometry.location.lng;
+      myMap.dropPins(myMap.lat, myMap.lng);
+    });
+  };
+
+  module.myMap = myMap;
 })(window);

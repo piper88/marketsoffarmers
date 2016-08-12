@@ -43,6 +43,8 @@
 //define/instantiate the actual map
   var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
+  infoWindow = new google.maps.InfoWindow({maxWidth: 225});
+
 //attach listener so center of map stays the center even on resize
   google.maps.event.addDomListener(window, 'resize', function() {
     //sets center to where map is currently centered
@@ -51,12 +53,23 @@
     map.setCenter(center);
   });
 
-  myMap.dropPins = function(latitude, longitude) {
-    console.log('dropping pin');
+  myMap.dropPins = function(latitude, longitude, market) {
+    console.log(latitude, longitude);
     var marker = new google.maps.Marker({
       position: {lat: latitude, lng: longitude},
       animation: google.maps.Animation.DROP,
       map: map
+    });
+    console.log(market);
+    var html = '<strong>' + market.marketname + '</strong> <br/>' + market.Address + '<br/>';
+    google.maps.event.addListener(marker, 'click', function() {
+      if (infoWindow.getMap()) {
+        infoWindow.close();
+      } else {
+        infoWindow.setContent(html);
+        infoWindow.open(map, marker);
+        listView.highlightMarket(market);
+      }
     });
   };
 
@@ -71,12 +84,13 @@
     });
   };
 
-  myMap.requestCoordinates = function (address) {
-    console.log('entering theMap.requestLocation', address);
-    $.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=AIzaSyAmRBpethxWhkGO2BxwEDmdQd6hDv84fhA', function(data) {
+  myMap.requestCoordinates = function (market) {
+    console.log('entering theMap.requestLocation', market.Address);
+    $.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + market.Address + '&key=AIzaSyAmRBpethxWhkGO2BxwEDmdQd6hDv84fhA', function(data) {
       myMap.lat = data.results[0].geometry.location.lat;
+      console.log(myMap.lat);
       myMap.lng = data.results[0].geometry.location.lng;
-      myMap.dropPins(myMap.lat, myMap.lng);
+      myMap.dropPins(myMap.lat, myMap.lng, market);
     });
   };
 

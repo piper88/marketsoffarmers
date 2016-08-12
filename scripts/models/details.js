@@ -1,5 +1,7 @@
 (function(module) {
 
+  //set up a view file that renders all the market data to the page at  the same time, and just set dispaly to hidden until they click show more. Don't compile and render in markets.js anymore
+
   function Details (opts) {
     this.Address = opts.Address;
     this.Schedule = opts.Schedule.slice(0, opts.Schedule.length - 12);
@@ -7,10 +9,6 @@
   }
 
   Details.all = [];
-
-  //first have to create the Market object WITH id AND details, and then push to an array, so you have an array of objects
-
-  //JOIN websql tables by id, to get new table with id, name, distance, and details
 
   Details.getData = function(id) {
     console.log('in Details.getData');
@@ -23,18 +21,7 @@
         console.log('detail success');
         var market = new Details(detaileddata.marketdetails);
         market.insertDetails();
-        // market.showDetails();
       }
-    });
-  };
-
-  Details.prototype.showDetails = function(oneMarket) {
-    $('.list-display').on('click', '.show-more', function(detail) {
-      console.log(detail);
-      $(this).hide();
-      $(this).parent().find('.show-less').show();
-      $('.' + detail.toElement.id).append(detail.toHtml());
-      // Details.getData(ctx.toElement.id);
     });
   };
 
@@ -46,7 +33,6 @@
         'Schedule VARCHAR(255),' +
         'Products VARCHAR(500)); '
     );
-    // Details.marketClicked();
   };
 
   Details.prototype.insertDetails = function() {
@@ -58,27 +44,22 @@
         }
       ]
     );
-    Details.joinTables();
+    webDB.execute('SELECT * FROM detaildata', function(rows) {
+      if (rows.length === 10) {
+        Details.joinTables(mainController.showMarkets);
+      }
+    });
   };
 
-  Details.joinTables = function() {
+  Details.joinTables = function(next) {
     webDB.execute('SELECT marketdata.marketname, marketdata.id, marketdata.distance, detaildata.Address, detaildata.Schedule, detaildata.Products FROM detaildata INNER JOIN marketdata ON marketdata.rowid=detaildata.rowid', function(rows) {
       Details.all = rows;
+      next();
     });
-    Details.renderToPage();
   };
 
-
-//should also eventually go in views, I think...
-  Details.prototype.toHtml = function(id) {
-    // detailView.showDetails(id);
-    var source = $('#market-details').html();
-    var template = Handlebars.compile(source);
-    return template(this);
-  };
 
   Details.createTable();
-  // Details.marketClicked();
 
   module.Details = Details;
 })(window);

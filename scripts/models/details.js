@@ -3,8 +3,12 @@
   //set up a view file that renders all the market data to the page at  the same time, and just set dispaly to hidden until they click show more. Don't compile and render in markets.js anymore
 
   function Details (opts) {
+    if (opts.Schedule === 'Unavailable') {
+      this.Schedule = opts.Schedule;
+    } else {
+      this.Schedule = opts.Schedule.slice(0, opts.Schedule.length - 12);
+    }
     this.Address = opts.Address;
-    this.Schedule = opts.Schedule.slice(0, opts.Schedule.length - 12);
     this.Products = opts.Products;
   }
 
@@ -19,6 +23,23 @@
       dataType: 'jsonp',
       success: function(detaileddata) {
         console.log('detail success');
+        console.log(detaileddata.marketdetails.Schedule.slice(14, 24));
+        console.log(parseInt((new Date() - new Date(detaileddata.marketdetails.Schedule.slice(14, 24)))/60/60/24/1000));
+        var validSchedule = parseInt((new Date() - new Date(detaileddata.marketdetails.Schedule.slice(14, 24)))/60/60/24/1000);
+        if (validSchedule < 0 || typeof validSchedule != "number") {
+          detaileddata.marketdetails.Schedule = detaileddata.marketdetails.Schedule;
+        } else {
+          detaileddata.marketdetails.Schedule = 'Unavailable';
+        }
+        var validProducts = detaileddata.marketdetails.Products;
+        if (validProducts.length > 0) {
+          detaileddata.marketdetails.Products = detaileddata.marketdetails.Products;
+        } else {
+          detaileddata.marketdetails.Products = 'Unavailable';
+        };
+        // if (detaileddata.marketdetails.Schedule ) {
+        //
+        // }
         var market = new Details(detaileddata.marketdetails);
         market.insertDetails();
       }
@@ -57,7 +78,6 @@
       next();
     });
   };
-
 
   Details.createTable();
 

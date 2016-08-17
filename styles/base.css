@@ -1,12 +1,10 @@
-/*.show-less {
-  display: none;
-}*/
-
 #map {
   height: 500px;
   width: 500px;
+  border: 5px solid rgb(255, 51, 51);
 }
 
-/*.detail-display {
-  display: none;
-}*/
+a {
+  text-decoration: none;
+  color: rgb(255, 51, 51);
+}

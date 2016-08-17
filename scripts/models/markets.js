@@ -13,6 +13,7 @@
   // Market.marketId = [];
 
   Market.getData = function(zip) {
+    // myMap.initAutocomplete();
     $('#list-container').empty();
 
     $.ajax({
@@ -58,6 +59,8 @@
   Market.findMarketsByZip = function() {
     // webDB.execute('DELETE * from marketdata');
     $('#formiepoo').on('submit', function(e) {
+      e.preventDefault();
+      // myMap.initAutocomplete();
       webDB.execute('SELECT * from marketdata', function(rows) {
         if (rows.length) {
           webDB.execute('DELETE from marketdata');
@@ -69,7 +72,6 @@
         }
       });
 
-      e.preventDefault();
       var chosenZip = $('#zip').val();
       if (chosenZip.length === 0) {
         console.log('zip is not present');
@@ -78,6 +80,7 @@
         console.log('zip chosen is' + chosenZip);
         Market.getData(chosenZip);
       }
+      // searchBox.addListener();
     });
   };
 
@@ -104,6 +107,7 @@
 
 //put this line in the marketController file...perhaps correct, perhaps not
   Market.createTable();
+  //Map.initAutocomplete();
 
   module.Market = Market;
 })(window);

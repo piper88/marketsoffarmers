@@ -2,7 +2,6 @@
 
   function Market (opts) {
     this.id = opts.id;
-    console.log(opts.id);
     this.marketname = opts.marketname.slice(4);
     this.distance = opts.marketname.slice(0,3);
   };
@@ -13,14 +12,14 @@
   // Market.marketId = [];
 
   Market.getDataByCoordinates = function(lat, lng) {
-    console.log('test');
+    $('#list-container').empty();
+    // console.log(lat, lng);
     $.ajax({
       type: "GET",
       contentType: "application/json; charset=utf-8",
       url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/locSearch?lat=" + lat + "&lng=" + lng,
       dataType: 'jsonp',
       success: function(data) {
-        console.log(data);
         Market.all = data;
         Market.all = Market.all.results.slice(0,10);
         Market.all.forEach(function(singleMarket) {
@@ -32,13 +31,11 @@
         Market.handoverToController();
       }
     });
-
-
   };
 
   Market.getData = function(zip) {
+    console.log('Market.getData by zip');
     $('#list-container').empty();
-
     $.ajax({
       type: "GET",
       contentType: "application/json; charset=utf-8",
@@ -46,7 +43,7 @@
 
       dataType: 'jsonp',
       success: function(data) {
-        console.log('success');
+        console.log('successfully got market data by zip');
         Market.all = data;
         Market.all = Market.all.results.slice(0,10);
         Market.all.forEach(function(singleMarket) {
@@ -62,12 +59,13 @@
 
 //if you want to call a method on an object or array in different js file, must wrap in method on an array within that js file?
   Market.handoverToController = function() {
+    console.log('Market.handoverToController');
     //call Details.getData on each market
     mainController.passToDetails();
   };
 
   Market.createTable = function(next) {
-    console.log('inside Market.createTable');
+    console.log('Market.createTable');
     webDB.execute(
       'CREATE TABLE IF NOT EXISTS marketdata (' +
         'id VARCHAR(255), ' +
@@ -77,36 +75,39 @@
     Market.findMarketsByZip();
   };
 
+  Market.clearMarketsAndDetails = function() {
+    webDB.execute('SELECT * from marketdata', function(rows) {
+      if (rows.length) {
+        webDB.execute('DELETE from marketdata');
+      }
+    });
+    webDB.execute('SELECT * from detaildata', function(rows) {
+      if (rows.length) {
+        webDB.execute('DELETE from detaildata');
+      }
+    });
+  };
+
   Market.findMarketsByZip = function() {
-    // webDB.execute('DELETE * from marketdata');
+    console.log('Market.findMarketByZip');
     $('#formiepoo').on('submit', function(e) {
+      $('#pac-input').val('');
+      console.log('submitting zip code form');
       e.preventDefault();
-      // myMap.initAutocomplete();
-      webDB.execute('SELECT * from marketdata', function(rows) {
-        if (rows.length) {
-          webDB.execute('DELETE from marketdata');
-        }
-      });
-      webDB.execute('SELECT * from detaildata', function(rows) {
-        if (rows.length) {
-          webDB.execute('DELETE from detaildata');
-        }
-      });
+      Market.clearMarketsAndDetails();
 
       var chosenZip = $('#zip').val();
       if (chosenZip.length === 0) {
-        console.log('zip is not present');
         Market.getData(98103);
       } else {
-        console.log('zip chosen is' + chosenZip);
         Market.getData(chosenZip);
       }
-      // searchBox.addListener();
     });
   };
 
 //eventually sort permits by distance, before inserting
   Market.prototype.insertPermit = function () {
+    console.log('Market.insertPermit');
     webDB.execute(
       [
         {

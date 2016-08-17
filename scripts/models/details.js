@@ -15,16 +15,14 @@
   Details.all = [];
 
   Details.getData = function(id) {
-    console.log('in Details.getData');
+    console.log('Details.getData');
     $.ajax({
       type: 'GET',
       contentType: "application/json; charset=utf-8",
       url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/mktDetail?id=" + id,
       dataType: 'jsonp',
       success: function(detaileddata) {
-        console.log('detail success');
-        console.log(detaileddata.marketdetails.Schedule.slice(14, 24));
-        console.log(parseInt((new Date() - new Date(detaileddata.marketdetails.Schedule.slice(14, 24)))/60/60/24/1000));
+        console.log('successfully got detail data by id');
         var validSchedule = parseInt((new Date() - new Date(detaileddata.marketdetails.Schedule.slice(14, 24)))/60/60/24/1000);
         if (validSchedule < 0 || typeof validSchedule != "number") {
           detaileddata.marketdetails.Schedule = detaileddata.marketdetails.Schedule;
@@ -37,17 +35,21 @@
         } else {
           detaileddata.marketdetails.Products = 'Unavailable';
         };
-        // if (detaileddata.marketdetails.Schedule ) {
-        //
-        // }
+        // Details.all = detaileddata.marketdetails;
+        // Details.all.forEach(function(marketDetails) {
+        //   var market = new Details (marketDetails);
+        //   market.insertDetails();
+        // });
         var market = new Details(detaileddata.marketdetails);
+        //need to empty out websql, and then insert?
+        // Market.clearMarketsAndDetails();
         market.insertDetails();
       }
     });
   };
 
   Details.createTable = function(next) {
-    console.log('creating details table');
+    console.log('Details.createTable');
     webDB.execute(
       'CREATE TABLE IF NOT EXISTS detaildata (' +
         'Address VARCHAR(255),' +
@@ -57,6 +59,7 @@
   };
 
   Details.prototype.insertDetails = function() {
+    console.log('Details.insertDetails');
     webDB.execute(
       [
         {
@@ -73,6 +76,7 @@
   };
 
   Details.joinTables = function(next) {
+    console.log('Details.joinTables');
     webDB.execute('SELECT marketdata.marketname, marketdata.id, marketdata.distance, detaildata.Address, detaildata.Schedule, detaildata.Products FROM detaildata INNER JOIN marketdata ON marketdata.rowid=detaildata.rowid', function(rows) {
       Details.all = rows;
       next();

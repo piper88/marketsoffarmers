@@ -2,6 +2,7 @@
   var mainController = {};
 
   mainController.passToDetails = function() {
+    console.log('mainController.passToDetails');
     Market.all.forEach(function(result) {
       Details.getData(result.id);
     });
@@ -9,6 +10,7 @@
 
 //passes control from markets to details, by passing the id of what the user clicks
   mainController.showMarkets = function() {
+    console.log('mainController.showMarkets');
     listView.compileMarkets();
     // console.log('in addDetailListener');
     // $('.list-display').on('click', '.show-less', function(ctx) {

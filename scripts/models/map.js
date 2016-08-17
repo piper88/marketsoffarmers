@@ -40,27 +40,84 @@
     }
   };
 
-//define/instantiate the actual map
+  //Instantiate acutal map, infoWindows, and add dom listener to stay on center
   var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  var infoWindow = new google.maps.InfoWindow({maxWidth: 225});
 
-  infoWindow = new google.maps.InfoWindow({maxWidth: 225});
-
-//attach listener so center of map stays the center even on resize
   google.maps.event.addDomListener(window, 'resize', function() {
-    //sets center to where map is currently centered
     var center = map.getCenter();
-    google.maps.event.trigger(map, 'resize');
+    google.maps.event.tripper(map, 'resize');
     map.setCenter(center);
   });
 
+
+ //---------------------------------------------------------------------------------------------------
+//   //Add Searchbox, Autocomplete, to search by address
+
+  var defaultBounds = new google.maps.LatLngBounds(
+  new google.maps.LatLng(47.000000, -123.000000),
+  new google.maps.LatLng(48.000000, -124.000000),
+
+  myMap.initAutocomplete = function () {
+    console.log('myMap.initAutocomplete');
+    searchBoxOptions = {
+      bounds: defaultBounds,
+      types: ['address']
+    };
+    // Create the search box and link it to the UI element.
+    var input = document.getElementById('pac-input');
+    var searchBox = new google.maps.places.SearchBox(input);
+
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', function() {
+      console.log('what?');
+      searchBox.setBounds(map.getBounds());
+    });
+
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener('places_changed', function() {
+      $('#formiepoo').val('');
+      Market.clearMarketsAndDetails();
+      console.log('searchBox.addListener');
+      var places = searchBox.getPlaces();
+      var addressLat = places[0].geometry.viewport.f.f;
+      var addressLng = places[0].geometry.viewport.b.b;
+      Market.getDataByCoordinates(addressLat, addressLng);
+      var bounds = new google.maps.LatLngBounds();
+      places.forEach(function(place) {
+        var icon = {
+          url: place.icon,
+          size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(25, 25)
+        };
+
+        if (place.geometry.viewport) {
+            // Only geocodes have viewport.
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      });
+      map.fitBounds(bounds);
+      map.setZoom(15);
+    });
+  });
+
+
+//-----------------------------------------------------------------------------------------------------
+//Drop pins and shit
+
   myMap.dropPins = function(latitude, longitude, market) {
-    console.log(latitude, longitude);
+    console.log('myMap.dropPins');
     var marker = new google.maps.Marker({
       position: {lat: latitude, lng: longitude},
       animation: google.maps.Animation.DROP,
       map: map
     });
-    console.log(market);
+    // console.log(market);
     var html = '<strong>' + market.marketname + '</strong> <br/>' + market.Address + '<br/>';
     google.maps.event.addListener(marker, 'click', function() {
       if (infoWindow.getMap()) {
@@ -74,9 +131,9 @@
   };
 
   myMap.resetCenter = function(middleArrayAddress) {
-    console.log(middleArrayAddress);
-    $.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + middleArrayAddress + '&key=AIzaSyAmRBpethxWhkGO2BxwEDmdQd6hDv84fhA', function(data) {
-      console.log(data);
+    console.log('myMap.resetCenter');
+    $.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + middleArrayAddress + '&key=AIzaSyBjoe5awPREbRDM0Vhlg2GS73-SskZMnTM', function(data) {
+      // console.log(data);
       myMap.lat = data.results[0].geometry.location.lat;
       myMap.lng = data.results[0].geometry.location.lng;
       mapOptions.center = new google.maps.LatLng(myMap.lat, myMap.lng);
@@ -85,14 +142,15 @@
   };
 
   myMap.requestCoordinates = function (market) {
-    console.log('entering theMap.requestLocation', market.Address);
-    $.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + market.Address + '&key=AIzaSyAmRBpethxWhkGO2BxwEDmdQd6hDv84fhA', function(data) {
+    console.log('myMap.requestCoordinates');
+    $.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + market.Address + '&key=AIzaSyBjoe5awPREbRDM0Vhlg2GS73-SskZMnTM', function(data) {
       myMap.lat = data.results[0].geometry.location.lat;
-      console.log(myMap.lat);
       myMap.lng = data.results[0].geometry.location.lng;
       myMap.dropPins(myMap.lat, myMap.lng, market);
     });
   };
+
+  myMap.initAutocomplete();
 
   module.myMap = myMap;
 })(window);

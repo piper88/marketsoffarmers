@@ -50,8 +50,12 @@
 
         <form id="formiepoo">
           Zip Code: <br>
-          <input type="text" name="zip" id = "zip"></input>
+          <input type="text" name="zip" id = "zip" autofocus></input>
           <button type="submit">Find Farmer's Markets</button>
+        </form>
+
+        <form id="address-search">
+
         </form>
 
         <section id="list-container" class="changeable-area">
@@ -59,10 +63,13 @@
 
       <!-- End of search-and-market-list section -->
       </section>
+      <section class="map-container">
+        <form>
+            <label><input id="pac-input" class="controls" type="text" placeholder="Enter Address" /></label>
+        </form>
 
-      <div id="map">
-
-      </div>
+        <div id="map"></div>
+      </section>
   <!-- End of page wrapper -->
   </section>
 
@@ -81,7 +88,6 @@
     <!-- views -->
     <script src="scripts/views/handlebars_compilers.js"></script>
     <script src="scripts/views/listView.js"></script>
-    <script src="scripts/views/detailView.js"></script>
     <!-- controllers -->
     <script src="scripts/controllers/mainController.js"></script>
     <script src="scripts/controllers/routes.js"></script>

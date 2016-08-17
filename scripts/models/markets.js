@@ -12,8 +12,31 @@
   //store id's of all 10 markets, so you can drop pins at these locations
   // Market.marketId = [];
 
+  Market.getDataByCoordinates = function(lat, lng) {
+    console.log('test');
+    $.ajax({
+      type: "GET",
+      contentType: "application/json; charset=utf-8",
+      url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/locSearch?lat=" + lat + "&lng=" + lng,
+      dataType: 'jsonp',
+      success: function(data) {
+        console.log(data);
+        Market.all = data;
+        Market.all = Market.all.results.slice(0,10);
+        Market.all.forEach(function(singleMarket) {
+          var market = new Market(singleMarket);
+          market.insertPermit();
+          //maybe this append part should eventually go in views somehow?
+          $('#list-container').append(market.toHtml());
+        });
+        Market.handoverToController();
+      }
+    });
+
+
+  };
+
   Market.getData = function(zip) {
-    // myMap.initAutocomplete();
     $('#list-container').empty();
 
     $.ajax({
@@ -34,9 +57,7 @@
         });
         Market.handoverToController();
       }
-
     });
-
   };
 
 //if you want to call a method on an object or array in different js file, must wrap in method on an array within that js file?
@@ -107,7 +128,6 @@
 
 //put this line in the marketController file...perhaps correct, perhaps not
   Market.createTable();
-  //Map.initAutocomplete();
 
   module.Market = Market;
 })(window);

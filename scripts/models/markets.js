@@ -8,12 +8,9 @@
 
 //Market.all contains id and name of market
   Market.all = [];
-  //store id's of all 10 markets, so you can drop pins at these locations
-  // Market.marketId = [];
 
   Market.getDataByCoordinates = function(lat, lng) {
     $('#list-container').empty();
-    // console.log(lat, lng);
     $.ajax({
       type: "GET",
       contentType: "application/json; charset=utf-8",
@@ -105,7 +102,6 @@
     });
   };
 
-//eventually sort permits by distance, before inserting
   Market.prototype.insertPermit = function () {
     console.log('Market.insertPermit');
     webDB.execute(

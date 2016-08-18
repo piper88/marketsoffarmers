@@ -24,6 +24,7 @@
       success: function(detaileddata) {
         console.log('successfully got detail data by id');
         var validSchedule = parseInt((new Date() - new Date(detaileddata.marketdetails.Schedule.slice(14, 24)))/60/60/24/1000);
+        console.log(validSchedule);
         if (validSchedule < 0 || typeof validSchedule != "number") {
           detaileddata.marketdetails.Schedule = detaileddata.marketdetails.Schedule;
         } else {

@@ -29,7 +29,7 @@
 
 //properties that will live on map object when initialized
   var mapOptions = {
-    zoom: 12,
+    zoom: 11,
     styles: stylesArray,
     center: new google.maps.LatLng(47.618217, -122.351832),
     mapTypeId: google.maps.MapTypeId.STREET,
@@ -77,7 +77,7 @@
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
     searchBox.addListener('places_changed', function() {
-      $('#formiepoo').val('');
+      $('#zip').val('');
       Market.clearMarketsAndDetails();
       console.log('searchBox.addListener');
       var places = searchBox.getPlaces();
@@ -85,9 +85,26 @@
       var addressLng = places[0].geometry.viewport.b.b;
       Market.getDataByCoordinates(addressLat, addressLng);
       var bounds = new google.maps.LatLngBounds();
+
+      // var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+      //   var marker = new google.maps.Marker({
+      //     position: myLatLng,
+      //     map: map,
+      //     icon: iconBase + 'parking_lot_maps.png'
+      //   });
+
+
       places.forEach(function(place) {
+        var image = new google.maps.MarkerImage(
+          '/vendors/assets/marker-images/image.png',
+          new google.maps.Size(48,49),
+          new google.maps.Point(0,0),
+          new google.maps.Point(24,49)
+        );
+        // var iconBase = 'http:images.clipartpanda.com/green-leaves-images-abstract-wallpapers-green-leaves-vector-wallpaper-30683.png';
+        // var iconBase = 'https:developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
         var icon = {
-          url: place.icon,
+          icon: image,
           size: new google.maps.Size(71, 71),
           origin: new google.maps.Point(0, 0),
           anchor: new google.maps.Point(17, 34),
@@ -102,7 +119,7 @@
         }
       });
       map.fitBounds(bounds);
-      map.setZoom(15);
+      map.setZoom(11);
     });
   });
 
@@ -111,10 +128,19 @@
 //Drop pins and shit
 
   myMap.dropPins = function(latitude, longitude, market) {
+    var image = new google.maps.MarkerImage(
+      '/vendors/assets/marker-images/image.png',
+      new google.maps.Size(48,49),
+      new google.maps.Point(0,0),
+      new google.maps.Point(24,49)
+    );
+  // var iconBase = 'http:images.clipartpanda.com/green-leaves-images-abstract-wallpapers-green-leaves-vector-wallpaper-30683.png';
+  // var iconBase =        'https:developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
     console.log('myMap.dropPins');
     var marker = new google.maps.Marker({
       position: {lat: latitude, lng: longitude},
       animation: google.maps.Animation.DROP,
+      icon: image,
       map: map
     });
     // console.log(market);
@@ -133,7 +159,6 @@
   myMap.resetCenter = function(middleArrayAddress) {
     console.log('myMap.resetCenter');
     $.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + middleArrayAddress + '&key=AIzaSyBjoe5awPREbRDM0Vhlg2GS73-SskZMnTM', function(data) {
-      // console.log(data);
       myMap.lat = data.results[0].geometry.location.lat;
       myMap.lng = data.results[0].geometry.location.lng;
       mapOptions.center = new google.maps.LatLng(myMap.lat, myMap.lng);

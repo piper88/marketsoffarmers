@@ -1,6 +1,11 @@
-#map {
+.map-container {
   height: 500px;
   width: 500px;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
   border: 5px solid rgb(255, 51, 51);
 }
 

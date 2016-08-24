@@ -8,9 +8,16 @@
   max-width: 50%;
 }
 
-/*#map {
-  max-width: 50%;
-}*/
+.map-container {
+  height: 500px;
+  width: 500px;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+  border: 5px solid rgb(255, 51, 51);
+}
 
 #pac-input {
   width: 259px;

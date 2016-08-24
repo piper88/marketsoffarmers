@@ -86,23 +86,14 @@
       Market.getDataByCoordinates(addressLat, addressLng);
       var bounds = new google.maps.LatLngBounds();
 
-      // var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-      //   var marker = new google.maps.Marker({
-      //     position: myLatLng,
-      //     map: map,
-      //     icon: iconBase + 'parking_lot_maps.png'
-      //   });
-
-
       places.forEach(function(place) {
         var image = new google.maps.MarkerImage(
-          '/vendors/assets/marker-images/image.png',
+          '/vendors/assets/marker-images/small-red-leaf.png',
           new google.maps.Size(48,49),
           new google.maps.Point(0,0),
           new google.maps.Point(24,49)
         );
-        // var iconBase = 'http:images.clipartpanda.com/green-leaves-images-abstract-wallpapers-green-leaves-vector-wallpaper-30683.png';
-        // var iconBase = 'https:developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+
         var icon = {
           icon: image,
           size: new google.maps.Size(71, 71),
@@ -128,14 +119,23 @@
 //Drop pins and shit
 
   myMap.dropPins = function(latitude, longitude, market) {
-    var image = new google.maps.MarkerImage(
-      '/vendors/assets/marker-images/image.png',
-      new google.maps.Size(48,49),
-      new google.maps.Point(0,0),
-      new google.maps.Point(24,49)
-    );
-  // var iconBase = 'http:images.clipartpanda.com/green-leaves-images-abstract-wallpapers-green-leaves-vector-wallpaper-30683.png';
-  // var iconBase =        'https:developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+    console.log(market);
+    if (market.Schedule === 'Unavailable') {
+      var image = new google.maps.MarkerImage(
+        '/vendors/assets/marker-images/small-red-leaf.png',
+        new google.maps.Size(48,49),
+        new google.maps.Point(0,0),
+        new google.maps.Point(24,49)
+      );
+    }
+    else {
+      var image = new google.maps.MarkerImage(
+        '/vendors/assets/marker-images/small-green-leaf.png',
+        new google.maps.Size(48,49),
+        new google.maps.Point(0,0),
+        new google.maps.Point(24,49)
+      );
+    }
     console.log('myMap.dropPins');
     var marker = new google.maps.Marker({
       position: {lat: latitude, lng: longitude},

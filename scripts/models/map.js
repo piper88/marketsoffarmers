@@ -3,12 +3,20 @@
 
   var stylesArray = [
     {
-      featureType: "all",
+      featureType: "water",
       stylers: [
-        { hue: "#00ffe6" },
-        { saturation: -20 }
+        { gamma: 1.0 },
+        { hue: "#C0D7EA"},
+        // { saturation: 18 }
       ]
     },
+    // {
+    //   featureType: "all",
+    //   stylers: [
+    //     { hue: "#BFD7EA" },
+    //     { saturation: -20 }
+    //   ]
+    // },
     {
       featureType: "road",
       elementType: "geometry",
@@ -70,12 +78,12 @@
 
     // Bias the SearchBox results towards current map's viewport.
     map.addListener('bounds_changed', function() {
-      console.log('what?');
       searchBox.setBounds(map.getBounds());
     });
 
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
+
     searchBox.addListener('places_changed', function() {
       $('#zip').val('');
       Market.clearMarketsAndDetails();
@@ -88,7 +96,7 @@
 
       places.forEach(function(place) {
         var image = new google.maps.MarkerImage(
-          '/vendors/assets/marker-images/small-red-leaf.png',
+          '/vendors/assets/marker-images/field.png',
           new google.maps.Size(48,49),
           new google.maps.Point(0,0),
           new google.maps.Point(24,49)
@@ -122,7 +130,7 @@
     console.log(market);
     if (market.Schedule === 'Unavailable') {
       var image = new google.maps.MarkerImage(
-        '/vendors/assets/marker-images/small-red-leaf.png',
+        '/vendors/assets/marker-images/red-field.png',
         new google.maps.Size(48,49),
         new google.maps.Point(0,0),
         new google.maps.Point(24,49)
@@ -130,7 +138,7 @@
     }
     else {
       var image = new google.maps.MarkerImage(
-        '/vendors/assets/marker-images/small-green-leaf.png',
+        '/vendors/assets/marker-images/field.png',
         new google.maps.Size(48,49),
         new google.maps.Point(0,0),
         new google.maps.Point(24,49)
@@ -148,6 +156,8 @@
     google.maps.event.addListener(marker, 'click', function() {
       if (infoWindow.getMap()) {
         infoWindow.close();
+        console.log('closing infowindow');
+        listView.unhighlightMarket(market);
       } else {
         infoWindow.setContent(html);
         infoWindow.open(map, marker);

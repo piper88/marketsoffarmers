@@ -13,10 +13,15 @@
   };
 
   listView.highlightMarket = function(market) {
-    $('.markets').css('background-color', 'white');
-    $('#' + market.id).css('background-color', 'yellow');
+    $('.markets').css('background-color', '#C0D7EA');
+    $('#' + market.id).css('background-color', '#edf4f9');
     //go to the a tag with href of id
     // $('list-container').find('a').attr('href', '#' + market.id);
+  };
+
+  listView.unhighlightMarket = function(market) {
+    console.log('unhighlight');
+    $('.markets').css('background-color', '#C0D7EA');
   };
 
   module.listView = listView;

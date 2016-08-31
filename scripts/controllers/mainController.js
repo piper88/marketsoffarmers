@@ -12,20 +12,21 @@
   mainController.showMarkets = function() {
     console.log('mainController.showMarkets');
     listView.compileMarkets();
-    // console.log('in addDetailListener');
-    // $('.list-display').on('click', '.show-less', function(ctx) {
-    //   console.log('clicked on show-less');
-    //   $(this).hide();
-    //   $(this).parent().find('.show-more').show();
-    //   $('section').find($('.' + ctx.toElement.id).empty());
-    // });
-    // $('.list-display').on('click', '.show-more', function(ctx) {
-    //   console.log('clicked on ' + ctx.toElement.id);
-    //   $(this).hide();
-    //   $(this).parent().find('.show-less').show();
-    //   $('.' + ctx.toElement.id).append(detail.toHtml());
-    //   // Details.getData(ctx.toElement.id);
-    // });
+    $('.list-display').on('click', '.show-less', function(ctx) {
+      console.log('clicked on show-less');
+      console.log($(this));
+      $(this).hide();
+      $(this).parent().find('.show-more').show();
+      $(this).parent().find('#details').hide();
+    });
+    $('.list-display').on('click', '.show-more', function(ctx) {
+      console.log('clicked on ' + ctx.toElement.id);
+      console.log($(this));
+      $(this).hide();
+      $(this).parent().find('.show-less').show();
+      //when they click on show-more, set display to show of h6 elements
+      $(this).parent().find('#details').show();
+    });
   };
 
   module.mainController = mainController;

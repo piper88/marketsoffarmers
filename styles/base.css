@@ -1,4 +1,75 @@
+body {
+  /*background-color: #EDE1D0;*/
+  /*background-color: #C0D7EA;*/
+  /*background-color: #839788;*/
+  background-color: #3454D1;
+
+}
+
+/*h1 is just title*/
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  color: #FFFFFF;
+}
+
+/*h3 is welcome text*/
+h3 {
+  font-family: 'Lora', serif;
+  color: #C0D7EA;
+}
+
+form {
+  color: #C0D7EA;
+  font-family: 'Lora', serif;
+}
+
+/*h4 is marketname*/
+h4 {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0px;
+}
+
+/*h5 is address*/
+h5 {
+  font-family: 'Lora', serif;
+  margin: 0px;
+}
+
+/*h6 is schedule and products*/
+h6 {
+  font-family: 'Lora', serif;
+  /*display: none;*/
+}
+
+#details {
+  display: none;
+}
+
+
 a {
   text-decoration: none;
-  color: rgb(255, 51, 51);
+  color: #000000;
+}
+
+input {
+  border: 1px gray solid;
+}
+
+button {
+  border: 1px gray solid;
+  background-color: #FFFFFF;
+  border-radius: 6px;
+}
+
+.show-less {
+  display: none;
+}
+
+.markets {
+  /*background-color: #d0edcc;*/
+  background-color: #C0D7EA;
+  border-radius: 6px;
+  border: 1px solid #FFFFFF;
+  margin-bottom: 8px;
+  padding: 4px;
 }

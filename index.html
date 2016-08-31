@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles/layout.css" />
     <link rel="stylesheet" href="styles/base.css" />
     <link rel="stylesheet" href="styles/style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Lora|Montserrat" rel="stylesheet">
 
     <script id="market-name" type="text/x-handlebars-template">
       <section id={{{id}}} class="markets">
@@ -17,62 +18,60 @@
     <script id='list-of-markets' type="text/x-handlebars-template">
       <section class="list-display">
           <!-- <h5>Distance from zip code: {{distance}} miles</h5> -->
-          <h5>Address: {{Address}}</h5>
-          <h5>Schedule: {{{Schedule}}}</h5>
-          <h5>Products: {{Products}}</h5>
-          <hr>
+          <h5>{{Address}}</h5>
+          <div id="details">
+            <h6>Schedule: {{{Schedule}}}</h5>
+            <h6>Products: {{Products}}</h5>
+          </div>
+          <button class="show-more">Show market details</button>
+          <button class="show-less">Hide market details</button>
       </section>
     </script>
-
-
-    <!--<script id="market-details" type="text/x-handlebars-template">
-      <section class="detail-display">
-        <h5>Address: {{Address}}</h5>
-        <h5>Schedule: {{{Schedule}}}</h5>
-        <h5>Products: {{Products}}</h5>
-
-      </section>
-    </script> -->
-
-<!-- //trying to find a way to route the page to the correct zip on submit -->
-    <!-- <script id="zip" type="text/x-handlebars-template">
-      <form id="formiepoo">
-        Zip Code: <br>
-        <input type="text" name="zip" id = "zip"></input>
-        <a href="/?zip={{zip}}"><button type="submit">Find Farmers Markets</button></a>
-      </form>
-    </script> -->
 
   </head>
 
   <body>
-    <section class="page-wrapper">
+
+    <section id="page-wrapper">
+
+    <header>
+      <h1>Farmer's Market Finder</h1>
+      <h3>Search for nearby farmer's markets by zip code or address. Information including location, schedule, and products for sale are available for most markets. </h3>
+    </header>
+
+    <main>
+
+    <section class="main-wrapper">
+
+      <section class="map-container">
+
+        <div id="map"></div>
+      </section>
+
       <section class="search-and-market-list">
 
         <form id="formiepoo">
-          Zip Code: <br>
+          Search by Zip Code: <br>
           <input type="text" name="zip" id = "zip" autofocus></input>
-          <button type="submit">Find Farmer's Markets</button>
+          <button type="submit">Find Markets by Zip</button>
         </form>
 
         <form id="address-search">
-
+          Search by Address: <br>
+          <label><input id="pac-input" class="controls" type="text" placeholder="Enter Address" /></label>
         </form>
-
+        <hr>
         <section id="list-container" class="changeable-area">
         </section>
 
       <!-- End of search-and-market-list section -->
       </section>
-      <section class="map-container">
-        <form>
-            <label><input id="pac-input" class="controls" type="text" placeholder="Enter Address" /></label>
-        </form>
-
-        <div id="map"></div>
-      </section>
-  <!-- End of page wrapper -->
+    </main>
+  <!-- End of main wrapper -->
   </section>
+  <!-- End of page wrapper -->
+</section>
+
 
 
     <!-- vendors -->

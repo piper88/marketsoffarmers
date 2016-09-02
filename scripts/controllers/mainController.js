@@ -12,21 +12,11 @@
   mainController.showMarkets = function() {
     console.log('mainController.showMarkets');
     listView.compileMarkets();
-    $('.list-display').on('click', '.show-less', function(ctx) {
-      console.log('clicked on show-less');
-      console.log($(this));
-      $(this).hide();
-      $(this).parent().find('.show-more').show();
-      $(this).parent().find('#details').hide();
-    });
-    $('.list-display').on('click', '.show-more', function(ctx) {
-      console.log('clicked on ' + ctx.toElement.id);
-      console.log($(this));
-      $(this).hide();
-      $(this).parent().find('.show-less').show();
-      //when they click on show-more, set display to show of h6 elements
-      $(this).parent().find('#details').show();
-    });
+    $('.markets').on('click', function() {
+      $(this).find('#details').toggle();
+      $(this).find('.show-less').toggle();
+      $(this).find('.show-more').toggle();
+    }); 
   };
 
   module.mainController = mainController;

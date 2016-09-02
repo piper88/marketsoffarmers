@@ -1,26 +1,53 @@
 body {
-  /*background-color: #EDE1D0;*/
-  /*background-color: #C0D7EA;*/
-  /*background-color: #839788;*/
-  background-color: #3454D1;
+  background-color: #C0D7EA;
+  width: 100%;
+}
 
+header {
+  background-image: url('/vendors/assets/April-produce-spectrum.jpg');
+  margin: 0 -10px;
+  width: 100%;
 }
 
 /*h1 is just title*/
 h1 {
   font-family: 'Montserrat', sans-serif;
   color: #FFFFFF;
+  font-weight: bolder;
+  opacity: 2;
+  padding: 10px;
+  margin: 0;
 }
 
 /*h3 is welcome text*/
 h3 {
-  font-family: 'Lora', serif;
-  color: #C0D7EA;
+  font-family: 'Montserrat', sans-serif;
+  color: #FFFFFF;
 }
 
 form {
   color: #C0D7EA;
   font-family: 'Lora', serif;
+}
+
+input:focus {
+  background-color: #C4F1BE;
+  border: 5px solid #82d278;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #201E50;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #201E50;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #201E50;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #201E50;
 }
 
 /*h4 is marketname*/
@@ -38,27 +65,23 @@ h5 {
 /*h6 is schedule and products*/
 h6 {
   font-family: 'Lora', serif;
-  /*display: none;*/
+  margin: 5px 0;
+  font-size: 11px;
 }
 
 #details {
   display: none;
 }
 
-
 a {
   text-decoration: none;
   color: #000000;
+  font-size: 10px;
+  text-align: center;
 }
 
 input {
   border: 1px gray solid;
-}
-
-button {
-  border: 1px gray solid;
-  background-color: #FFFFFF;
-  border-radius: 6px;
 }
 
 .show-less {
@@ -66,10 +89,11 @@ button {
 }
 
 .markets {
-  /*background-color: #d0edcc;*/
-  background-color: #C0D7EA;
-  border-radius: 6px;
-  border: 1px solid #FFFFFF;
+  background-color: #C4F1BE;
   margin-bottom: 8px;
   padding: 4px;
+}
+
+.markets:hover {
+  background-color: #82d278;
 }

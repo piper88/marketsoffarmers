@@ -11,7 +11,7 @@
 
     <script id="market-name" type="text/x-handlebars-template">
       <section id={{{id}}} class="markets">
-        <a href="#"><h4>{{marketname}}</h4></a>
+        <h4>{{marketname}}</h4>
       </section>
     </script>
 
@@ -20,11 +20,13 @@
           <!-- <h5>Distance from zip code: {{distance}} miles</h5> -->
           <h5>{{Address}}</h5>
           <div id="details">
-            <h6>Schedule: {{{Schedule}}}</h5>
-            <h6>Products: {{Products}}</h5>
+            <h6><strong>Schedule:</strong> {{{Schedule}}}</h5>
+            <h6><strong>Products:</strong> {{Products}}</h5>
           </div>
-          <button class="show-more">Show market details</button>
-          <button class="show-less">Hide market details</button>
+          <div id="more-less">
+            <a class="show-more">Show more &#9662;</a>
+            <a class="show-less">Show less &#9652;</a>
+          </div>
       </section>
     </script>
 
@@ -36,8 +38,12 @@
 
     <header>
       <h1>Farmer's Market Finder</h1>
-      <h3>Search for nearby farmer's markets by zip code or address. Information including location, schedule, and products for sale are available for most markets. </h3>
     </header>
+    
+    <section id="welcome">
+      <h3>Search for nearby farmer's markets by zip code or address. Information including location, schedule, and products for sale are available for most markets. </h3>
+
+    </section>
 
     <main>
 
@@ -51,14 +57,12 @@
       <section class="search-and-market-list">
 
         <form id="formiepoo">
-          Search by Zip Code: <br>
-          <input type="text" name="zip" id = "zip" autofocus></input>
+          <input type="text" name="zip" id = "zip"  placeholder='Search by Zip Code' autofocus></input>
           <button type="submit">Find Markets by Zip</button>
         </form>
 
         <form id="address-search">
-          Search by Address: <br>
-          <label><input id="pac-input" class="controls" type="text" placeholder="Enter Address" /></label>
+          <label><input id="pac-input" class="controls" type="text" placeholder="Search by Address" /></label>
         </form>
         <hr>
         <section id="list-container" class="changeable-area">

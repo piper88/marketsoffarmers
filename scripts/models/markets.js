@@ -14,7 +14,7 @@
     $.ajax({
       type: "GET",
       contentType: "application/json; charset=utf-8",
-      url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/locSearch?lat=" + lat + "&lng=" + lng,
+      url: "https://search.ams.usda.gov/farmersmarkets/v1/data.svc/locSearch?lat=" + lat + "&lng=" + lng,
       dataType: 'jsonp',
       success: function(data) {
         Market.all = data;
@@ -36,7 +36,7 @@
     $.ajax({
       type: "GET",
       contentType: "application/json; charset=utf-8",
-      url: "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/zipSearch?zip=" + zip,
+      url: "https://search.ams.usda.gov/farmersmarkets/v1/data.svc/zipSearch?zip=" + zip,
 
       dataType: 'jsonp',
       success: function(data) {

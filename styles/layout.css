@@ -1,66 +1,94 @@
+header {
+  width: 90%;
+  margin: auto;
+}
+
 h1 {
   text-align: center;
+  font-size: 40px;
 }
 
 h3 {
   text-align: center;
+  font-size: 16px;
+  margin-top: 0px;
+  padding: 5px 5px;
 }
 
-header {
-  width: 90%;
-  margin: auto;
+.search-and-market-list {
+  width: 95%;
+}
+
+.map-container {
+  width: 95%;
+}
+
+#welcome {
+  background-color: #3454D1;
+  width: 100%;
+  margin-left: -8px;
 }
 
 #page-wrapper {
   width: 100%;
 }
 
-.search-and-market-list {
-  width: 100%;
-}
-
-.map-container {
-  width: 100%;
-  /*height: 100%;*/
-}
-
 #map {
-  /*width: 300px;
-  height: 300px;*/
-  border: 5px solid #FFFFFF;
   padding: 50% 0;
-
+  border: 2px solid #6a7ecc;
+  /*position: fixed;*/
 }
 
-/*#pac-input {
-  width: 259px;
-}*/
+#pac-input {
+  width: 246px;
+}
+
+#formie-poo {
+  margin: 15px 0px;
+}
+
+#address-search {
+  margin: 15px 0px;
+}
+
+#more-less {
+  text-align: center;
+}
 
 @media only screen and (min-width: 720px) {
 
-  .page-wrapper {
+  h1 {
+    font-size: 60px;
+  }
+
+  h3 {
+    text-align: center;
+    margin-top: 0px;
+    padding: 15px 150px;
+  }
+
+  .main-wrapper {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
   }
 
   .search-and-market-list {
-    max-width: 50%;
+    max-width: 47%;
+    padding-left: 10px;
   }
 
   .map-container {
-    height: 500px;
-    width: 500px;
+    max-width: 47%;
   }
 
   #map {
-    height: 100%;
-    width: 100%;
-    border: 5px solid #000000;
+    padding: 50% 0;
+    position: fixed;
   }
 
   #pac-input {
-    width: 259px;
+    width: 246px;
   }
 
 }

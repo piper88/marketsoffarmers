@@ -40,7 +40,7 @@ h3 {
 }
 
 #pac-input {
-  width: 246px;
+  width: 247px;
 }
 
 #formie-poo {
@@ -65,6 +65,7 @@ h3 {
     text-align: center;
     margin-top: 0px;
     padding: 15px 150px;
+    line-height: 30px;
   }
 
   .main-wrapper {
@@ -88,7 +89,7 @@ h3 {
   }
 
   #pac-input {
-    width: 246px;
+    width: 249px;
   }
 
 }
